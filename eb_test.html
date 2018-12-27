@@ -10,29 +10,40 @@
 </head>
 
 <body>
-  <button>Get data</button>
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-  <script>
-    $(function(){
-      $('button').click(function(){
-        console.log('hello');
+<button>Get data</button>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script>
 
+$(function(){
+    // Don't need a click handler, and all of the code inside the click handler can be run after page load.
+    $('button').click(function(){
+        // Check that the button click works.
+        console.log('Button clicked');
+
+        // The Eventbrite data can be obtained through just JavaScript, but we don't want to expose the OAuth token.
         $.ajax({
-          url:'http://jacobsschool.ucsd.edu/be/eb_test.php',
-          complete:function(data){
-            var result = JSON.parse(data.responseText);
-            var attendees = result.attendees;
+            url:'http://jacobsschool.ucsd.edu/be/eb_test.php',
+            complete:function(data){
+                // The data object contains properties that aren't useful to displaying registration data. The responseText property contains relevant data.
+                var result = JSON.parse(data.responseText);
+                // The attendees property of the responseText property is an array of the attendees.
+                var attendees = result.attendees;
 
-            for (var i = 0; i < attendees.length; i++) {
-              console.log(attendees[i]);
+                // Loop through all of the attendees list
+                for (var i = 0; i < attendees.length; i++) {
+                    // Print the attendee information in the log. This should show all of the available data from Eventbrite.
+                    console.log(attendees[i]);
+                    // Each attendee object has a "profile" property, which are the default fields that Eventbrite has.
+                    // There is also a "answers" property, which contains the custom questions and answers.
+                }
             }
-          }
         });
-      });
     });
-  </script>
+});
+
+</script>
 </body>
 </html>
