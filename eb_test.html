@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+</head>
+
+<body>
+  <button>Get data</button>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script>
+    $(function(){
+      $('button').click(function(){
+        console.log('hello');
+
+        $.ajax({
+          url:'http://jacobsschool.ucsd.edu/be/eb_test.php',
+          complete:function(data){
+            var result = JSON.parse(data.responseText);
+            var attendees = result.attendees;
+
+            for (var i = 0; i < attendees.length; i++) {
+              console.log(attendees[i]);
+            }
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
